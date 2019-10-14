@@ -2,7 +2,7 @@
 
 This repository contains JavaScript codes for a web-based simulation platform demonstrating distributed coverage control problem. Here we have multiple agents (i.e. robots) that are trying to maximize their probability of detecting random events in an environment using an online distributed algorithm. Each robot only has information about the agents in its sensing range, and based on that information decides where to move. Moreover, each of them has a limited battery and needs to be recharged before it fully depletes. We have a charging station located at the top left corner of the mission space which can only serve one robot at a time. Using a collaborative scheduling algorithm, robots move toward the charging station and get recharged before running out of battery. It is guaranteed that robots never run out of battery in the mission space, and we only have at most one robot at the charging station at a time. 
 
-![](https://github.com/arian92/Multi-Agent-Coverage-Control-with-Energy-Constraint/blob/master/demo.gif)
+<center>![](https://github.com/arian92/Multi-Agent-Coverage-Control-with-Energy-Constraint/blob/master/demo.gif)</center>
  
 
 ## Usage
