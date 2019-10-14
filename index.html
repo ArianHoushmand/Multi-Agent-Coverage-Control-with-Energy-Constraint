@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Coverage</title>
+        <script src="libraries/p5.js" type="text/javascript"></script>
+        <script src="libraries/p5.dom.js" type="text/javascript"></script>
+        <script src="libraries/p5.sound.js" type="text/javascript"></script>
+        <script src="libraries/p5.play.js" type="text/javascript"></script>
+        <script src="sketch.js"></script>
+        <script src="particle.js"></script>
+        <script src="sensing.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+        <link href="libraries/introjs.css" rel="stylesheet">
+        <script type="text/javascript" src="libraries/intro.js"></script>
+
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="jumbotron">
+                <h2 align="center"><i class="fa fa-car" aria-hidden="true"></i> <i class="fa fa-wifi" aria-hidden="true"></i> <i class="fa fa-battery-three-quarters" aria-hidden="true"></i></h2>
+                <h2 align="center">Multi Agent Coverage Control Problem with Energy Constraint </h2>
+                <div class="container text-center">
+                    <a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Show me how</a>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-5 " >
+
+                </div>
+
+                <div id="bottonRow" class="col-lg-3 col-md-5">
+
+                    <a id="playBotton" href="#" class="btn btn-success btn-md" onclick="start();" data-step="9" data-intro="Start the simulation">
+                        <span class="glyphicon glyphicon-play"></span> Start
+                    </a>
+
+                    <a id="stopBotton" href="#" class="btn btn-danger btn-md" onclick="stopParticle();" data-step="10" data-intro="Stop the simulation.">
+                        <span class="glyphicon glyphicon-stop"></span> Stop
+                    </a>
+
+                    <a id="resetBotton" href="#" class="btn btn-default  btn-md" onclick="reset();" data-step="11" data-intro="Reset the simulation." >
+                        <span class="glyphicon glyphicon-refresh"></span> Reset
+                    </a>
+
+
+                </div>
+
+                <div id="objectiveValue" class="col-lg-4 col-md-7" >
+                    <h4>Objective Fucntion Value: <span id="ObjectiveDisplay"></span> </h4>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 col-md-5">
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-12"  data-step="1" data-intro="Select number of agents in mission space by adding/removing them.">
+                            <label> Number of Agents
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]" onclick="removeAgent();">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input type="text" name="quant[2]" class="form-control input-number" value="1" min="0" max="8" disabled>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]" onclick="addAgent();">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6" data-step="8" data-intro="Choose whether or not to show coverage density in the mission space.">
+
+                            <div class="checkbox" >
+                                <label>
+                                    <input type="checkbox" id="CoverageDensityCheckBox"  checked="checked" > Display Coverage Density
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12" >
+                            <div class="form-group" data-step="2" data-intro="Choose the scheduling  algorithm for recharging of agents. FRFS: First request first serve, SDF: Shortest distance first.">
+                                <label for="radio-inline" >Scheduling Algorithm:</label>
+
+                                <label class="radio-inline" >
+                                    <input type="radio" name="inlineRadioOptions" id="FCFSScheduling" checked="checked" > FRFS
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="SDFScheduling" > SDF
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12 " >
+
+
+                            <div  id="batteryLevelDropdown" data-step="3" data-intro="Choose the initial battery level of agents.">
+                                <label for="InitialBattery (SOC)">Initial Battery Levels:</label>
+                                <select class="form-control" id="InitialBattery">
+                                    <option value="1" selected="selected">Random</option>
+                                    <option value="2">Full (100%)</option>
+                                    <option value="3" selected="selected">Fixed</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6">
+                            <p >Max Linear Speed: <span id="demoSpeed"></span></p>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" >
+
+                            <div class="slidecontainer" data-step="4" data-intro="Choose maximum linear speed of agents.">
+
+                                <input type="range" min="0" max="10" value="5" class="Speedslider" id="speedRange">
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6">
+                            <p >Sensing Range: <span id="demoSensing"></span></p>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" >
+
+                            <div class="slidecontainer" data-step="5" data-intro="Choose sensing range of agents.">
+
+                                <input type="range" min="5" max="80" value="22" class="Speedslider" id="sensingRange">
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-4 col-md-7" data-step="6" data-intro="Choose battery depletion rate.">
+                            <label for="usr">&alpha; value:</label>
+
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" placeholder="0.0001" id="alphaInput" >
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info " type="button" onclick="alphaGet();">OK</button>
+
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-md-7" data-step="7" data-intro="Choose maximum battery threshold level for letting agents out of charging station.">
+                            <label for="usr">&theta; value:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="1" id="thetaInput" min="0" max="1" required title="should be between zero and 1 ">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" onclick="thetaGet();">OK</button>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div  style="overflow:scroll;height:320px;width:100%;overflow:auto">
+                                <table id="AgentsTable" class="table table-bordered">
+                                    <thead >
+                                        <tr class="info">
+                                            <th>Agent</th>
+                                            <th>X</th>
+                                            <th>Y</th>
+                                            <th>SOC</th>
+                                            <th>Speed</th>
+                                            <th>Mode</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-6 ">
+                    <p id="p5Canvas"></p>
+                </div>
+            </div>
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+                    <p>By Arian Houshmand: <a href="mailto:arianh@bu.edu">arianh@bu.edu</a>
+                </div>
+            </footer>
+
+            <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+            <script>
+                var Speedslider = document.getElementById("speedRange");
+                var Speedoutput = document.getElementById("demoSpeed");
+                Speedoutput.innerHTML = Speedslider.value;
+                linSpeedTemp=Speedslider.value;
+
+                Speedslider.oninput = function() {
+                    Speedoutput.innerHTML = this.value;
+                    linSpeedTemp=this.value;
+                }
+            </script>
+
+            <script>
+                var Sensingslider = document.getElementById("sensingRange");
+                var Sensingoutput = document.getElementById("demoSensing");
+                Sensingoutput.innerHTML = Sensingslider.value;
+                senRange=10*Sensingslider.value;
+
+                Sensingslider.oninput = function() {
+                    Sensingoutput.innerHTML = this.value;
+                    senRange=10*this.value;
+                }
+            </script>
+
+
+            <script>
+                $('.btn-number').click(function(e){
+                    e.preventDefault();
+
+                    fieldName = $(this).attr('data-field');
+                    type      = $(this).attr('data-type');
+                    var input = $("input[name='"+fieldName+"']");
+                    var currentVal = parseInt(input.val());
+                    if (!isNaN(currentVal)) {
+                        if(type == 'minus') {
+
+                            if(currentVal > input.attr('min')) {
+                                input.val(currentVal - 1).change();
+                            }
+                            if(parseInt(input.val()) == input.attr('min')) {
+                                $(this).attr('disabled', true);
+                            }
+
+                        } else if(type == 'plus') {
+
+                            if(currentVal < input.attr('max')) {
+                                input.val(currentVal + 1).change();
+                            }
+                            if(parseInt(input.val()) == input.attr('max')) {
+                                $(this).attr('disabled', true);
+                            }
+
+                        }
+                    } else {
+                        input.val(0);
+                    }
+                });
+                $('.input-number').focusin(function(){
+                    $(this).data('oldValue', $(this).val());
+                });
+                $('.input-number').change(function() {
+
+                    minValue =  parseInt($(this).attr('min'));
+                    maxValue =  parseInt($(this).attr('max'));
+                    valueCurrent = parseInt($(this).val());
+
+                    name = $(this).attr('name');
+                    if(valueCurrent >= minValue) {
+                        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+                    } else {
+                        alert('Sorry, the minimum value was reached');
+                        $(this).val($(this).data('oldValue'));
+                    }
+                    if(valueCurrent <= maxValue) {
+                        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+                    } else {
+                        alert('Sorry, the maximum value was reached');
+                        $(this).val($(this).data('oldValue'));
+                    }
+
+
+                });
+                $(".input-number").keydown(function (e) {
+                    // Allow: backspace, delete, tab, escape, enter and .
+                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                        // Allow: Ctrl+A
+                        (e.keyCode == 65 && e.ctrlKey === true) ||
+                        // Allow: home, end, left, right
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        // let it happen, don't do anything
+                        return;
+                    }
+                    // Ensure that it is a number and stop the keypress
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
+                });
+
+
+            </script>
+
+
+            </body>
+        </html>

@@ -1,0 +1,82 @@
+.jumbotron{
+    color: #2c3e50;
+}
+
+#bottonRow {
+    padding-bottom:7px;
+}
+#objectiveValue{
+    margin-bottom:7px;
+    ?
+
+
+}
+
+#numberOfAgents{
+
+    padding-left: 10px;
+    /*    padding-top: 5px;*/
+    margin-left: 10px;
+}
+
+#checkboxSuccess{
+    padding-left: 100px;
+
+}
+
+.checkbox{
+    padding-top: 15px;
+}
+
+.Speedslider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.Speedslider:hover {
+    opacity: 1;
+}
+
+.Speedslider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.Speedslider::-moz-range-thumb {
+    width: 250px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+table{
+
+    margin-top: 10px;
+}
+
+#ObjectiveDisplay{
+    border-style: solid;
+    border-color: yellowgreen;
+    border-width: 5px;
+    color: blue;
+    margin-left: auto;
+
+}
+
+#batteryLevelDropdown{
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
